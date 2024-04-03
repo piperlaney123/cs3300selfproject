@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'game_review_app'
+
+    'game_review_app',
+    'taggit'
+    'django_bootstrap5'
 
 ]
 
