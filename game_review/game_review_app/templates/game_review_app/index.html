@@ -4,10 +4,15 @@
 
 <!-- Replace block content in base_template.html -->
 {% block content %}
-<h1>Game Review App Yay</h1>
+<h1>Game Reviews</h1>
+<ul class="list-group">
+    {% for review in game_reviews%}
+    <li class="list-group-item">Game: {{review.game_title}}
+        <p><a href="{% url 'review-detail' review.id %}"><button type="button" class="btn btn-primary">See Review</button></a></p>
 
-
-<h2>More to come from meeee</h2>
+ </li>
+    {% endfor %}
+</ul>
 
 
 {% endblock %}

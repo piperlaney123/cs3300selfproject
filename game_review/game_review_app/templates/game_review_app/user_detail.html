@@ -1,0 +1,10 @@
+{%extends 'game_review_app/base_template.html' %}
+
+{% block content %}
+<h1>Name: {{ user.name }}</h1>
+
+<p><strong>About:</strong> {{ user.about }}</p>
+<p><strong>Active User:</strong> {{ user.is_active_user }} </p>
+<p><strong>Favorite Game Genres:</strong>  {% for tag in user.preferred_game_genres.slugs %} {{tag}} {% endfor %}</p>
+
+{% endblock %}

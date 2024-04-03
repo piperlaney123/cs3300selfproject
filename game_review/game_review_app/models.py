@@ -32,8 +32,13 @@ class Review(models.Model):
     star_rating = models.CharField(max_length=200, choices=STAR_RATING)'''
     tags = TaggableManager()
     review_summary = models.TextField(blank = True)
-    would_recommend = models.BooleanField(default = False)
+    #would_recommend = models.BooleanField(default = False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    OPTIONS = (
+        ('Yes', 'Yes'),
+        ('No', 'No'),
+    )
+    would_recommend = models.CharField(max_length=200, choices=OPTIONS)
 
     def __str__(self):
         return self.game_title

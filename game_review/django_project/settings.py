@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'game_review_app',
-    'taggit'
+    'taggit',
     'django_bootstrap5'
 
 ]
