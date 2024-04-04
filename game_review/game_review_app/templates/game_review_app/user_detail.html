@@ -6,5 +6,14 @@
 <p><strong>About:</strong> {{ user.about }}</p>
 <p><strong>Active User:</strong> {{ user.is_active_user }} </p>
 <p><strong>Favorite Game Genres:</strong>  {% for tag in user.preferred_game_genres.slugs %} {{tag}} {% endfor %}</p>
+<p><strong>Game Reviews:</strong> 
+    <p> <button onclick="location.href='{% url 'review-create' user.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Create Review</button></p>
+
+    {% for review in reviews%}
+    <li class="list-group-item">Game: {{reviews.game_title}}
+        <p> <button onclick="location.href='{% url 'review-detail' review.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">See Review</button></p>
+
+ </li>
+    {% endfor %}
 
 {% endblock %}

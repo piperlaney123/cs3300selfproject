@@ -20,7 +20,7 @@
 
         .rating-list li:hover,
         .rating-list li:hover ~ li {
-          color: orange;
+          color: pink;
         }
 
         .rating-list {
@@ -28,25 +28,25 @@
           list-style: none;
         }
         .checked {
-            color: orange;
+            color: pink;
         }
     </style>
 
 
 <h1>Game: {{ review.game_title }}</h1>
 <p><strong>Rating:</strong>
-    ​​<span class="fa fa-star {% if rating.rating > 0 %} checked {% endif %}"></span>
-    <span class="fa fa-star {% if rating.rating > 1 %} checked {% endif %}"></span>
-    <span class="fa fa-star {% if rating.rating > 2 %} checked {% endif %}"></span>
-    <span class="fa fa-star {% if rating.rating > 3 %} checked {% endif %}" ></span>
-    <span class="fa fa-star {% if rating.rating > 4 %} checked {% endif %}"></span>
+    ​​<span class="fa fa-star {% if review.rating > 0 %} checked {% endif %}"></span>
+    <span class="fa fa-star {% if review.rating > 1 %} checked {% endif %}"></span>
+    <span class="fa fa-star {% if review.rating > 2 %} checked {% endif %}"></span>
+    <span class="fa fa-star {% if review.rating > 3 %} checked {% endif %}" ></span>
+    <span class="fa fa-star {% if review.rating > 4 %} checked {% endif %}"></span>
 </p>
 
 
 <p><strong>Summmary:</strong> {{ review.review_summary }}</p>
 <p><strong>Would you recommend this game to someone?</strong> {{ review.would_recommend }} </p>
-<p><strong>Tags:</strong>  {% for tag in review.tags.slugs %} {{tag}} {% endfor %}</p>
-<p><strong>User:</strong> <p><a href="{% url 'user-detail' review.user.id %}"><button type="button" class="btn btn-primary">See User Profile</button></a></p>
+<p><strong>Tags:</strong>  {% for tag in review.tags.slugs %} <button style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">{{tag}}</button> {% endfor %}</p>
+<p><strong>User:</strong> <p> <button onclick="location.href='{% url 'user-detail' review.user.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">See User Profile</button></p>
 
 {% endblock %}
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -39,18 +40,11 @@ class Review(models.Model):
         ('No', 'No'),
     )
     would_recommend = models.CharField(max_length=200, choices=OPTIONS)
+    rating = models.PositiveIntegerField(default=0, choices=((i,i) for i in range(0,6)))
 
     def __str__(self):
         return self.game_title
     
     def get_absolute_url(self):
         return reverse("review_detail", args=[str(self.id)])
-    
-
-class Rating(models.Model):
-    review = models.OneToOneField(Review, null = True, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f"{self.review.game_title}"
     
