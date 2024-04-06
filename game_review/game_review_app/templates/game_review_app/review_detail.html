@@ -48,6 +48,10 @@
 <p><strong>Tags:</strong>  {% for tag in review.tags.slugs %} <button style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">{{tag}}</button> {% endfor %}</p>
 <p><strong>User:</strong> <p> <button onclick="location.href='{% url 'user-detail' review.user.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">See User Profile</button></p>
 
+
+<p><strong>Want to edit this review?:</strong> <p> <button onclick="location.href='{% url 'update-review' review.user.id review.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Edit Review</button></p>
+<p><strong>Want to delete this review?:</strong> <p> <button onclick="location.href='{% url 'delete-review' review.user.id review.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Delete Review</button></p>
+
 {% endblock %}
 
 

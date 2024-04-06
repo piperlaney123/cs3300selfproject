@@ -16,4 +16,7 @@
  </li>
     {% endfor %}
 
+<p><strong>Edit Profile:</strong>
+    <p> <button onclick="location.href='{% url 'update-user' user.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Edit Profile</button></p>
+
 {% endblock %}

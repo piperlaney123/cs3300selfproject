@@ -16,4 +16,9 @@ path('', views.logout, name='logout'),
 path('review/<int:review_id>', views.ReviewDetailView, name='review-detail'),
 path('user/<int:user_id>', views.UserDetailView, name='user-detail'),
 path('user/<int:user_id>/review/create/', views.createReview, name='review-create'),
+path('user/<int:user_id>/edit_review/<int:review_id>/', views.updateReview, name='update-review'),
+path('user/<int:user_id>/delete_review/<int:review_id>/', views.deleteReview, name='delete-review'),
+path('users/', views.UserListView.as_view(), name='user-list'),
+path('user/update/<int:user_id>/', views.updateUser, name='update-user'),
+
 ] 

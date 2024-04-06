@@ -1,0 +1,15 @@
+{% extends 'game_review_app/base_template.html' %}
+
+{% block content %}
+<h1> User List </h1>
+{% if user_list %}
+<ul>
+    {% for user in user_list %}
+    <li><a href="{% url 'user-detail' user.id %}">{{ user.name }}</a></li>
+
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are no users registered.</p>
+{% endif %}
+{% endblock %}
