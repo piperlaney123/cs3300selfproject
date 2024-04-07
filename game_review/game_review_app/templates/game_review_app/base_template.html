@@ -17,6 +17,16 @@
             background-color: #F33A6A;
             color: #FFFFFF;
         }
+
+        .navbar {
+            background: #ffe2e6;
+        }
+
+        .bg-body-tertiary {
+            background-color: #ffe2e6 !important;
+        }
+
+        
     </style>
 
  </head>
@@ -24,19 +34,20 @@
 
  <body>
    <div class="container-fluid">
+    
+    
 
 
      <!-- Navbar-->
-     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-       <img src="{% static 'images/uccs_logo.gif' %}">
+   
+       <nav class="navbar navbar-expand-lg bg-body-tertiary">
+       <img src="{% static 'images/reviewcat(1).png' %}">
        <div class="container-fluid">
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
          </button>
          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
            <div class="navbar-nav">
-             <!--  {% url 'index' %}  is defined in url path to dynamically create url -->
-             <!-- <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a> -->
              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
              <a class="nav-link active" aria-current="page" href="{% url 'user-list' %}">Users</a>
 
