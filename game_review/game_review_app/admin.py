@@ -6,3 +6,4 @@ from .models import Review
 admin.site.register(User)
 admin.site.register(Review)
 #admin.site.register(Rating)
+
