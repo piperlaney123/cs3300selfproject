@@ -1,0 +1,61 @@
+{%extends 'game_review_app/base_template.html' %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <title>Rating</title>
+</head>
+<body>
+    <style>
+        .rating-list li {
+          float: right;
+          color: #ddd;
+          padding: 10px 5px;
+        }
+
+        .rating-list li:hover,
+        .rating-list li:hover ~ li {
+          color: pink;
+        }
+
+        .rating-list {
+          display: inline-block;
+          list-style: none;
+        }
+        .checked {
+            color: pink;
+        }
+    </style>
+
+
+<p><strong>Game:</strong> {{ review.game_title }}</p>
+<p><strong>User: </strong><a href="{% url 'user-detail' review.user_id %}">{{review.user.name}}</a>
+<p><strong>Rating: </strong>
+    ​​<span class="fa fa-star {% if review.rating > 0 %} checked {% endif %}"></span>
+    <span class="fa fa-star {% if review.rating > 1 %} checked {% endif %}"></span>
+    <span class="fa fa-star {% if review.rating > 2 %} checked {% endif %}"></span>
+    <span class="fa fa-star {% if review.rating > 3 %} checked {% endif %}" ></span>
+    <span class="fa fa-star {% if review.rating > 4 %} checked {% endif %}"></span>
+</p>
+<p><strong>Tags: </strong>  {% for tag in review.tags.slugs %} <button style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">{{tag}}</button> {% endfor %}</p>
+<p><strong>Would you recommend this game to someone? </strong> {{ review.would_recommend }} </p>
+<p><strong>Summary:</strong></p><p> <div class="w-50 p-3" style="background-color: #ffe2e6;">{{ review.review_summary }}</div></p>
+
+
+
+   
+    
+
+
+<p> <button onclick="location.href='{% url 'update-review' review.user.id review.id %}'" style="padding: 5px 10px; background-color: #83C760; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Edit Review</button>
+ <button onclick="location.href='{% url 'delete-review' review.user.id review.id %}'" style="padding: 5px 10px; background-color: #1F8A70; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Delete Review</button></p>
+
+{% endblock %}
+
+
+    

@@ -1,0 +1,17 @@
+{% extends 'game_review_app/base_template.html' %}
+
+
+{% block content %}
+<form action='' method='POST'>
+    {% csrf_token %}
+    <p> Are you sure you want to delete your review on "{{ review.game_title }}"?</p>
+    <div>
+        <button type="submit" class="btn custom-btn">Delete It!</button>
+        <a href="{% url 'user-detail' review.user_id %}"><button type="button" class="btn custom-btn">Cancel</button></a>
+
+
+    </div>
+</form>
+
+
+{% endblock content %}
