@@ -1,3 +1,5 @@
+
+
 {% extends 'game_review_app/base_template.html' %}
 
 {% block content %}
@@ -57,10 +59,6 @@
 
 
 <div class="mt-4">
-{% if isAuthenticated %}
-    {% if isOwner %}
 <p> <button onclick="location.href='{% url 'update-user' reviewuser.id %}'" style="padding: 5px 10px; background-color: #83C760; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Edit Profile</button> <button onclick="location.href='{% url 'review-create' reviewuser.id %}'" style="padding: 5px 10px; background-color: #1F8A70; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Create Review</button></p>
 <div class="mt-4">
-    {% endif %}
-{% endif %}
 {% endblock %}

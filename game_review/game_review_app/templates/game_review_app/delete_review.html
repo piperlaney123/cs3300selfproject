@@ -7,7 +7,7 @@
     <p> Are you sure you want to delete your review on "{{ review.game_title }}"?</p>
     <div>
         <button type="submit" class="btn custom-btn">Delete It!</button>
-        <a href="{% url 'user-detail' review.user_id %}"><button type="button" class="btn custom-btn">Cancel</button></a>
+        <a href="{% url 'user-detail' review.reviewuser_id %}"><button type="button" class="btn custom-btn">Cancel</button></a>
 
 
     </div>

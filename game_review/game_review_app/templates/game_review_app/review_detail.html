@@ -34,7 +34,7 @@
 
 
 <p><strong>Game:</strong> {{ review.game_title }}</p>
-<p><strong>User: </strong><a href="{% url 'user-detail' review.user_id %}">{{review.user.name}}</a>
+<p><strong>User: </strong><a href="{% url 'user-detail' review.reviewuser_id %}">{{review.reviewuser.name}}</a>
 <p><strong>Rating: </strong>
     ​​<span class="fa fa-star {% if review.rating > 0 %} checked {% endif %}"></span>
     <span class="fa fa-star {% if review.rating > 1 %} checked {% endif %}"></span>
@@ -48,13 +48,15 @@
 
 
 
+
    
     
-
-
-<p> <button onclick="location.href='{% url 'update-review' review.user.id review.id %}'" style="padding: 5px 10px; background-color: #83C760; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Edit Review</button>
- <button onclick="location.href='{% url 'delete-review' review.user.id review.id %}'" style="padding: 5px 10px; background-color: #1F8A70; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Delete Review</button></p>
-
+{% if user.is_authenticated %}
+{% if isOwner %}
+    <p> <button onclick="location.href='{% url 'update-review' review.reviewuser.id review.id %}'" style="padding: 5px 10px; background-color: #83C760; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Edit Review</button>
+    <button onclick="location.href='{% url 'delete-review' review.reviewuser.id review.id %}'" style="padding: 5px 10px; background-color: #1F8A70; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Delete Review</button></p>
+{% endif %}
+{% endif %}
 {% endblock %}
 
 

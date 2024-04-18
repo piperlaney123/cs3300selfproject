@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 
@@ -18,7 +18,12 @@ path('user/<int:user_id>', views.UserDetailView, name='user-detail'),
 path('user/<int:user_id>/review/create/', views.createReview, name='review-create'),
 path('user/<int:user_id>/edit_review/<int:review_id>/', views.updateReview, name='update-review'),
 path('user/<int:user_id>/delete_review/<int:review_id>/', views.deleteReview, name='delete-review'),
-path('users/', views.UserListView.as_view(), name='user-list'),
+path('users/', views.ReviewUserListView.as_view(), name='user-list'),
 path('user/update/<int:user_id>/', views.updateUser, name='update-user'),
+path('accounts/', include('django.contrib.auth.urls')),
+path('accounts/register/', views.registerPage, name = 'register_page'),
+path('user/', views.userPage, name='user-page'),
+#path('login/', views.loginPage, name='login'),
+path('logout/', views.logoutUser, name='logout'),
 
 ] 

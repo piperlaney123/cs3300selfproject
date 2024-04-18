@@ -1,16 +1,18 @@
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-class User(models.Model):
+class ReviewUser(models.Model):
 
     name = models.CharField(max_length=200)
     about = models.TextField(blank = True)
     is_active_user = models.BooleanField(default = False)
     preferred_game_genres = TaggableManager()
+    # for authentication 
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -34,7 +36,7 @@ class Review(models.Model):
     tags = TaggableManager()
     review_summary = models.TextField(blank = True)
     #would_recommend = models.BooleanField(default = False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reviewuser = models.ForeignKey(ReviewUser, on_delete=models.CASCADE)
     OPTIONS = (
         ('Yes', 'Yes'),
         ('No', 'No'),
