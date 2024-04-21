@@ -5,5 +5,4 @@ from .models import Review
 # Register your models here.
 admin.site.register(ReviewUser)
 admin.site.register(Review)
-#admin.site.register(Rating)
 

@@ -7,41 +7,19 @@ from .forms import ReviewForm, UserForm, CreateUserForm
 from django.contrib import messages
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import PermissionRequiredMixin
+#from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .decorators import must_own_review, must_own_userprofile
-
-# Create your views here.
 from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
+from django.views.generic import ListView
+from django.db.models import Q
+#from django.http import HttpResponse
+
+
 def index(request):
    game_reviews = Review.objects.all()
-
-
-
-# Render the HTML template index.html with the data in the context variable.
+    # Render the HTML template index.html with the data in the context variable.
    return render( request, 'game_review_app/index.html', {'game_reviews':game_reviews})
-
-'''
-def login(request):
-    return HttpResponse('login')
-
-def logout(request):
-    return HttpResponse('logout')
-'''
-
-
-
-'''
-class ReviewDetailView(generic.DetailView):
-    model = Review
-    rating = Review.objects.get(pk=model.pk)
-'''
-
-class IsOwnerPermission(Permission):
-    def has_object_permission(self, request, view, obj):
-        return obj.owner == request.user
     
     
 def ReviewDetailView(request, review_id):
@@ -57,10 +35,6 @@ def ReviewDetailView(request, review_id):
     
     return render(request, 'game_review_app/review_detail.html', {'review':review, 'isOwner':isOwner, 'isAuthenticated': isAuthenticated })
 
-'''
-class UserDetailView(generic.DetailView):
-    model = User
-'''
 
 # OKAY BRO. U USED THE VARIABLE NAME 'user' THAT WAS FUCKING UP user.is_authenticated IN BASE TEMPLATE
 # THATS WHY THE LOGIN WASNT WORKING ON THESE SPECIFIC PAGES. YOU CHANGED user TO reviewuser AND 
@@ -74,6 +48,7 @@ def UserDetailView(request, user_id):
 
 
 @login_required(login_url='login') 
+@must_own_userprofile
 def createReview(request, user_id):
     form = ReviewForm()
 
@@ -134,7 +109,6 @@ class ReviewUserListView(generic.ListView):
 
 
 @login_required(login_url='login') 
-#change user to reviewuser
 @must_own_userprofile
 def updateUser(request, user_id):
     reviewuser = ReviewUser.objects.get(pk=user_id)
@@ -183,10 +157,10 @@ def userPage(request):
         form = UserForm(request.POST, request.FILES, instance = reviewuser)
         if form.is_valid():
             form.save()
-            #return redirect('user-detail', reviewuser.id)
+            
             
 
-    context = {'form':form, 'reviewuser': reviewuser}
+    context = {'form':form, 'reviewuser': reviewuser, 'reviews':reviews}
     return render(request, 'game_review_app/user.html', context)
 
 
@@ -194,7 +168,19 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
+class SearchResultsView(ListView):
+    model = Review
+    template_name = "search_results.html"
 
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        object_list = Review.objects.filter(Q(game_title__icontains=query) | Q(tags__name__in=[query]))
+        return object_list
+    
 
-
-
+'''
+def index(request):
+   game_reviews = Review.objects.all()
+    # Render the HTML template index.html with the data in the context variable.
+   return render( request, 'game_review_app/index.html', {'game_reviews':game_reviews})
+'''

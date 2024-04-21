@@ -14,9 +14,6 @@ class UserForm(ModelForm):
     class Meta:
         model = ReviewUser
         fields = ('name', 'about', 'is_active_user', 'preferred_game_genres')
-        #fields = '__all__'
-        #exclude = ['user']
-
 
 class CreateUserForm(UserCreationForm):
     class Meta:

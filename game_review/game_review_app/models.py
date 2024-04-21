@@ -18,21 +18,13 @@ class ReviewUser(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("user_detail", args=[str(self.id)])
+        return reverse("user-detail", args=[str(self.id)])
 
 class Review(models.Model):
 
     game_title = models.CharField(max_length=200)
     # List of choices for major in database, human readable name
-    '''STAR_RATING = (
-        ('1', 'One'),
-        ('2', 'Two'),
-        ('3', 'Three'),
-        ('4', 'Four'),
-        ('5', 'Five')
-    )
-
-    star_rating = models.CharField(max_length=200, choices=STAR_RATING)'''
+  
     tags = TaggableManager()
     review_summary = models.TextField(blank = True)
     #would_recommend = models.BooleanField(default = False)
@@ -48,5 +40,5 @@ class Review(models.Model):
         return self.game_title
     
     def get_absolute_url(self):
-        return reverse("review_detail", args=[str(self.id)])
+        return reverse("review-detail", args=[str(self.id)])
     

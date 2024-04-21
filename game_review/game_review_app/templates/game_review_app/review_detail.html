@@ -1,12 +1,23 @@
 {%extends 'game_review_app/base_template.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages%}
 
 {% block content %}
+
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Rating</title>
 </head>
@@ -30,31 +41,82 @@
         .checked {
             color: pink;
         }
+        h1 {
+            text-align: left;
+            font-family: "Concert One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            color: #F33A6A;
+            font-size: 26pt !important;
+        }
+        h2 {
+            text-align: left;
+            font-family: "Concert One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            color: #1f8a71 !important;
+            font-size: 18pt !important;
+        }
+
+        .card-header {
+            padding: .5rem 1rem;
+            margin-bottom: 0;
+            background-color: #fff8eb !important;
+            border-bottom: transparent !important;
+            border-top: transparent !important;
+            color: #f33c6a;
+
+        }
+        .card {
+            border: transparent !important;
+        }
+        a {
+            color: #1f8a71 !important; 
+        }
+        a:hover {
+            color: #f33c6a !important; 
+        }
+       
+        .card-body {
+            font-family: "Poppins";
+            color: #04372b !important;
+        }
     </style>
 
+<!-- CSS Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-<p><strong>Game:</strong> {{ review.game_title }}</p>
-<p><strong>User: </strong><a href="{% url 'user-detail' review.reviewuser_id %}">{{review.reviewuser.name}}</a>
-<p><strong>Rating: </strong>
-    ​​<span class="fa fa-star {% if review.rating > 0 %} checked {% endif %}"></span>
-    <span class="fa fa-star {% if review.rating > 1 %} checked {% endif %}"></span>
-    <span class="fa fa-star {% if review.rating > 2 %} checked {% endif %}"></span>
-    <span class="fa fa-star {% if review.rating > 3 %} checked {% endif %}" ></span>
-    <span class="fa fa-star {% if review.rating > 4 %} checked {% endif %}"></span>
-</p>
-<p><strong>Tags: </strong>  {% for tag in review.tags.slugs %} <button style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">{{tag}}</button> {% endfor %}</p>
-<p><strong>Would you recommend this game to someone? </strong> {{ review.would_recommend }} </p>
-<p><strong>Summary:</strong></p><p> <div class="w-50 p-3" style="background-color: #ffe2e6;">{{ review.review_summary }}</div></p>
+<!-- CSS Custom File -->
+<link href="{% static 'css/homepage.css' %}" rel="stylesheet">
+
+<div class="card">
+    <h1 class="card-header"><strong>Game:</strong> {{ review.game_title }}</h1>
+    <div class="card-body">
+        <h2 class="card-title"><strong>User: </strong><a href="{% url 'user-detail' review.reviewuser_id %}">{{review.reviewuser.name}}</a></h2>
+        <p class="card-text"><p><h2><strong>Rating: </strong>
+            ​​<span class="fa fa-star {% if review.rating > 0 %} checked {% endif %}"></span>
+            <span class="fa fa-star {% if review.rating > 1 %} checked {% endif %}"></span>
+            <span class="fa fa-star {% if review.rating > 2 %} checked {% endif %}"></span>
+            <span class="fa fa-star {% if review.rating > 3 %} checked {% endif %}" ></span>
+            <span class="fa fa-star {% if review.rating > 4 %} checked {% endif %}"></span></h2>
+        </p>
+        <p><h2><strong>Tags: </strong>  {% for tag in review.tags.slugs %} <button style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">{{tag}}</button> {% endfor %}</h2></p>
+        <p><h2><strong>Would you recommend this game to someone? </strong> {{ review.would_recommend }} </h2></p>
+        {% if review.would_recommend == 'Yes' %}
+        <p><img src="{% static 'images/reviewcatapproved!.png' %}"></p>
+        {% else %}
+        <p><img src="{% static 'images/reviewcatdisapproved.png' %}"></p>
+        {% endif %}
+        <p><h2><strong>Summary:</h2></strong></p><p> <div class="w-50 p-3" style="background-color: #ffe2e6;">{{ review.review_summary }}</div></p></p>
+    </div>
+</div>
 
 
-
-
-   
-    
 {% if user.is_authenticated %}
 {% if isOwner %}
-    <p> <button onclick="location.href='{% url 'update-review' review.reviewuser.id review.id %}'" style="padding: 5px 10px; background-color: #83C760; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Edit Review</button>
-    <button onclick="location.href='{% url 'delete-review' review.reviewuser.id review.id %}'" style="padding: 5px 10px; background-color: #1F8A70; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">Delete Review</button></p>
+    <p> <button onclick="location.href='{% url 'update-review' review.reviewuser.id review.id %}'" style="padding: 5px 10px; background-color: #83C760; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer; font-family: Concert One; font-size: 16pt;">Edit Review</button>
+    <button onclick="location.href='{% url 'delete-review' review.reviewuser.id review.id %}'" style="padding: 5px 10px; background-color: #1F8A70; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer; font-family: Concert One; font-size: 16pt;">Delete Review</button></p>
 {% endif %}
 {% endif %}
 {% endblock %}

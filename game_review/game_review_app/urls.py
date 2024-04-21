@@ -11,8 +11,6 @@ urlpatterns = [
 path('', views.index, name='index'),
 path('', views.login, name='login'),
 path('', views.logout, name='logout'),
-#path('review/<int:pk>', views.ReviewDetailView.as_view(), name='review-detail'),
-#path('user/<int:pk>', views.UserDetailView.as_view(), name='user-detail'),
 path('review/<int:review_id>', views.ReviewDetailView, name='review-detail'),
 path('user/<int:user_id>', views.UserDetailView, name='user-detail'),
 path('user/<int:user_id>/review/create/', views.createReview, name='review-create'),
@@ -21,9 +19,9 @@ path('user/<int:user_id>/delete_review/<int:review_id>/', views.deleteReview, na
 path('users/', views.ReviewUserListView.as_view(), name='user-list'),
 path('user/update/<int:user_id>/', views.updateUser, name='update-user'),
 path('accounts/', include('django.contrib.auth.urls')),
-path('accounts/register/', views.registerPage, name = 'register_page'),
+path('accounts/register/', views.registerPage, name = 'register-page'),
 path('user/', views.userPage, name='user-page'),
-#path('login/', views.loginPage, name='login'),
 path('logout/', views.logoutUser, name='logout'),
+path('search/', views.SearchResultsView.as_view(), name="search_results"),
 
 ] 
