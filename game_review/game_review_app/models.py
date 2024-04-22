@@ -27,7 +27,6 @@ class Review(models.Model):
   
     tags = TaggableManager()
     review_summary = models.TextField(blank = True)
-    #would_recommend = models.BooleanField(default = False)
     reviewuser = models.ForeignKey(ReviewUser, on_delete=models.CASCADE)
     OPTIONS = (
         ('Yes', 'Yes'),
