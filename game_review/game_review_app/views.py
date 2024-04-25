@@ -13,6 +13,7 @@ from .decorators import must_own_review, must_own_userprofile
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.db.models import Q
+import re
 #from django.http import HttpResponse
 
 
@@ -168,19 +169,77 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
+
 class SearchResultsView(ListView):
     model = Review
     template_name = "search_results.html"
 
     def get_queryset(self):
         query = self.request.GET.get("q")
-        object_list = Review.objects.filter(Q(game_title__icontains=query) | Q(tags__name__in=[query]))
-        return object_list
+        # for multiple queries separated by commas, create list of them by spliting query according to commas
+        query_list = re.split(r', |,',query) # space sensitive
+        print(query_list)
+        object_list = Review.objects.none()
     
 
+        for query in query_list:
+            # do union b/c query filtering isnt a list. its a set of queries.
+            # the way to iterate through multiple queries from search bar is to union each filter to a query set 
+            # that is first set to none. 
+            object_list = object_list.union( (Review.objects.filter(Q(game_title__icontains=query) | Q(tags__name__in=[query])).distinct()) )
+
+        
+        return object_list
+
+
+
 '''
-def index(request):
-   game_reviews = Review.objects.all()
-    # Render the HTML template index.html with the data in the context variable.
-   return render( request, 'game_review_app/index.html', {'game_reviews':game_reviews})
+class SearchResultsView(ListView):
+    model = Review
+    template_name = "search_results.html"
+    
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        query_list = re.split(r'%2C', query)
+        object_list = []
+
+        for query in query_list:
+            object_list.append(Review.objects.filter(Q(game_title__icontains=query) | Q(  tags__name__in=[query]  )   ).distinct())
+        
+        return object_list
+
+
+my view:
+@login_required(login_url='login') 
+@must_own_userprofile
+def createReview(request, user_id):
+    form = ReviewForm()
+
+    user = ReviewUser.objects.get(pk=user_id)
+
+    if request.method == 'POST':
+        review_data = request.POST.copy()
+        review_data['user_id'] = user_id
+        form = ReviewForm(review_data)
+        if form.is_valid:
+            review = form.save(commit=False)
+            review.reviewuser = user
+            review.save()
+            # come back to this line of code, for some reason it saves the form's tags; without it, tag arent saved. 
+            form.save_m2m()
+
+            return redirect('user-detail', user_id)
+        
+    context = {'form': form}
+    return render(request, 'game_review_app/review_form.html', context)
+
+my test:
+def test_create_review_view(self):
+    client = Client()
+    response = client.get(reverse('review-create', kwargs={'user_id': self.reviewuser.id}))
+    print(response['location'])
+    self.assertEqual(response.status_code, 200) 
+    self.assertTemplateUsed(response, 'game_review_app/review_form.html')
+
 '''

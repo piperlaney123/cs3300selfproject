@@ -74,7 +74,7 @@
                 <span class="fa fa-star {% if review.rating > 2 %} checked {% endif %}"></span>
                 <span class="fa fa-star {% if review.rating > 3 %} checked {% endif %}" ></span>
                 <span class="fa fa-star {% if review.rating > 4 %} checked {% endif %}"></span></p>
-            <p> <button onclick="location.href='{% url 'review-detail' review.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">See Review</button></p></li>
+                <p> <button onclick="location.href='{% url 'review-detail' review.id %}'" style="padding: 5px 10px; background-color: #F33A6A; color: #FFFFFF; border: none; border-radius: 10px; cursor: pointer;">See Review</button></p></li>
             {% endfor %}
         </ul>
     <div>
